@@ -1,0 +1,25 @@
+{
+  "root": true,
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "sourceType": "module",
+    "project": "./tsconfig.json"
+  },
+
+  "plugins": ["@typescript-eslint", "no-loops", "prettier"],
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
+    "prettier"
+  ],
+  "rules": {
+    "no-console": 0,
+    "no-loops/no-loops": 2,
+    "prettier/prettier": 2
+  },
+  "env": {
+    "node": true,
+    "es2020": true
+  }
+}
