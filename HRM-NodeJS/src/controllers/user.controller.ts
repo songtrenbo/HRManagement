@@ -6,20 +6,35 @@ class UserController {
     try {
       const users = await UserService.getAllUsers();
       if (!users) {
-        res.status(404).json('There are no user match!');
+        return res.status(404).json('There are no user match!');
       }
-      res.json(users);
+      return res.status(200).json(users);
     } catch (error) {
-      res.status(500).json(`error: ${error}`);
+      return res.status(500).json(`error: ${error}`);
     }
   }
 
   static async apiCreateUser(req: Request, res: Response) {
     try {
-      const newUser = await UserService.newUser(req.body);
-      res.json(newUser);
+      const newUser = await UserService.createUser(req.body);
+      if (!newUser) {
+        return res.status(400).json('Invalid request');
+      }
+      return res.status(200).json('Account created successfully');
     } catch (error) {
-      res.status(500).json(`error: ${error}`);
+      return res.status(500).json(`error: ${error}`);
+    }
+  }
+
+  static async apiGetMembersFromTeam(req: Request, res: Response) {
+    try {
+      const getMember = await UserService.getMembersFromTeam(req.params.id);
+      if (!getMember) {
+        return res.status(400).json('Invalid request');
+      }
+      return res.status(200).json(getMember);
+    } catch (error) {
+      return res.status(500).json(`error: ${error}`);
     }
   }
 }

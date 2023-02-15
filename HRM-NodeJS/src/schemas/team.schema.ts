@@ -7,18 +7,13 @@ const TeamSchema = new Schema({
 
   teamName: {
     type: String,
-    required: true
+    required: true,
+    unique: true
   },
 
   lastUpdated: {
     type: Date,
     default: new Date()
-  },
-
-  user: {
-    type: Schema.Types.ObjectId,
-    ref: 'User',
-    required: true
   }
 });
 export default TeamSchema;

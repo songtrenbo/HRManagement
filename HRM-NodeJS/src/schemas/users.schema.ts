@@ -6,12 +6,12 @@ const UserSchema = new Schema({
     auto: true
   },
 
-  username:{
+  username: {
     type: String,
     unique: true
   },
 
-  password:{
+  password: {
     type: String
   },
 
@@ -43,7 +43,7 @@ const UserSchema = new Schema({
   status: {
     type: String,
     enum: ['available', 'unavailable'],
-    default: 'unavailable'
+    default: 'available'
   },
 
   role: {
@@ -52,15 +52,20 @@ const UserSchema = new Schema({
     default: 'member'
   },
 
-  team: {
-    type: Schema.Types.ObjectId,
-    ref: 'Team',
-    required: true
-  },
+  team: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Team'
+    }
+  ],
 
   lastUpdated: {
     type: Date,
     default: new Date()
+  },
+  refreshToken: {
+    type: String,
+    default: ''
   }
 });
 
