@@ -1,8 +1,42 @@
 import { IUser } from '../interfaces/user.interface';
 import { UserModel } from '../models/user.model';
 import { default as bcrypt } from 'bcryptjs';
+import jwt from 'jsonwebtoken';
 
 class UserService {
+  static async login(username: string, password: string) {
+    const userData = await UserModel.findOne({ username: username });
+    if (userData && bcrypt.compareSync(password, userData.password) === true) {
+      const data = {
+        userId: userData._id,
+        firstName: userData.firstName,
+        mail: userData.mail
+      };
+
+      const token = jwt.sign(data, process.env.ACCESS_TOKEN_PRIVATE_KEY!, {
+        expiresIn: 300
+      });
+
+      const refreshToken = jwt.sign({}, process.env.REFRESH_TOKEN_PRIVATE_KEY!, {
+        expiresIn: '24h'
+      });
+
+      const addRefreshToken = await UserModel.findByIdAndUpdate(userData._id, {
+        refreshToken: refreshToken
+      });
+
+      const response = {
+        token: token
+      };
+
+      if (addRefreshToken && response) {
+        return response;
+      }
+    } else {
+      return null;
+    }
+  }
+
   static async getAllUsers() {
     try {
       const users = UserModel.find();

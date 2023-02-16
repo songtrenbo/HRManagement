@@ -1,0 +1,25 @@
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+            <form #loginForm="ngForm" class=" border border-secondary rounded-2 p-4">
+                <div class="w-100 d-flex justify-content-center">
+                    <h2>Login form</h2>
+                </div>
+                <div class="mb-3">
+                  <label for="InputUsername" class="form-label">Username</label>
+                  <input type="text" class="form-control" id="InputUsername" name="username" placeholder="Enter Username" [(ngModel)]="user.username" required>
+                </div>
+                <div class="mb-3">
+                  <label for="InputPassword" class="form-label">Password</label>
+                  <input type="password" class="form-control" id="InputPassword" name="password" placeholder="•••••••••••••" [(ngModel)]="user.password" required>
+                </div>
+                <div class="w-100 d-flex justify-content-center">
+                    <button [disabled]="!loginForm.valid" type="submit" class="btn btn-outline-primary fs-5 px-5" (click)="login()">Login now</button>
+                </div>
+              </form>
+        </div>
+        <div class="col-md-4"></div>
+    </div>
+    
+</div>

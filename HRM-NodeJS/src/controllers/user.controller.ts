@@ -1,7 +1,21 @@
 import { Request, Response } from 'express';
 import UserService from '../services/user.service';
+import { IUser } from '../interfaces/user.interface';
 
 class UserController {
+  static async apiLogin(req: Request, res: Response) {
+    try {
+      const userData: IUser = req.body;
+      let user = await UserService.login(userData.username, userData.password);
+      if (user) {
+        return res.status(201).json(user);
+      }
+      return res.status(401).json('Invalid request');
+    } catch (err) {
+      return res.status(500).json(err);
+    }
+  }
+
   static async apiGetAllUsers(req: Request, res: Response) {
     try {
       const users = await UserService.getAllUsers();
