@@ -6,7 +6,7 @@ class UserController {
   static async apiLogin(req: Request, res: Response) {
     try {
       const userData: IUser = req.body;
-      let user = await UserService.login(userData.username, userData.password);
+      const user = await UserService.login(userData.username, userData.password);
       if (user) {
         return res.status(201).json(user);
       }

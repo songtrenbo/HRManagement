@@ -11,8 +11,8 @@ export const tokenChecker = (req: Request, res: Response, next: NextFunction) =>
   try {
     const bearer = token.split(' ');
     const bearerToken = bearer[1];
-    const decoded = jwt.verify(bearerToken, process.env.ACCESS_TOKEN_PRIVATE_KEY!);
-  } catch (err: any) {
+    jwt.verify(bearerToken, process.env.ACCESS_TOKEN_PRIVATE_KEY || '');
+  } catch (err) {
     return res.status(401).send('Invalid Token');
   }
   return next();

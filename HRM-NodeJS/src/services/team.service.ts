@@ -29,8 +29,11 @@ class TeamService {
     try {
       const exitedUser = await UserModel.findOne({ _id: userId });
       const exitedTeam = await TeamModel.find({ _id: teamId });
+      const findLeader = await UserModel.findOne({ team: teamId, role: 'leader' });
 
-      if (exitedUser && exitedTeam && !exitedUser.team.toString().includes(teamId)) {
+      //check if user and team is exited, team has this member/leader or not
+
+      if (exitedUser && exitedTeam && !exitedUser.team.toString().includes(teamId) && !findLeader) {
         const response = await UserModel.findByIdAndUpdate(userId, {
           $push: { team: teamId }
         });

@@ -10,14 +10,15 @@ class UserService {
       const data = {
         userId: userData._id,
         firstName: userData.firstName,
-        mail: userData.mail
+        mail: userData.mail,
+        role: userData.role
       };
 
-      const token = jwt.sign(data, process.env.ACCESS_TOKEN_PRIVATE_KEY!, {
+      const token = jwt.sign(data, process.env.ACCESS_TOKEN_PRIVATE_KEY || '', {
         expiresIn: 300
       });
 
-      const refreshToken = jwt.sign({}, process.env.REFRESH_TOKEN_PRIVATE_KEY!, {
+      const refreshToken = jwt.sign({}, process.env.REFRESH_TOKEN_PRIVATE_KEY || '', {
         expiresIn: '24h'
       });
 

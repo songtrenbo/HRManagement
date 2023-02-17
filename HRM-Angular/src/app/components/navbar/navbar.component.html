@@ -1,9 +1,9 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container d-flex justify-content-between">
-    <a class="navbar-brand text-primary" routerLink="/home">HR Management</a>
+    <a class="navbar-brand text-primary" routerLink="{{isLogin() && isManage()?'/manage':'/home'}}">HR Management</a>
     <div class="d-flex align-items-center">
       <a
-        routerLink="/home"
+        routerLink="{{isLogin() && isManage()?'/manage':'/home'}}"
         class="text-decoration-none mx-3"
         routerLinkActive="active"
       >
@@ -12,7 +12,8 @@
       <a
         routerLink="/login"
         class="text-decoration-none mx-3"
-        routerLinkActive="active"
+        routerLinkActive="active"        
+        *ngIf="!isLogin()"
       >
         Login
       </a>
@@ -22,10 +23,11 @@
         data-bs-toggle="offcanvas"
         data-bs-target="#offcanvas"
         role="button"
+        *ngIf="isLogin() && isManage()"
       >
         Management
       </a>
-      <div class="dropdown" appDropdown>
+      <div class="dropdown" appDropdown *ngIf="isLogin()">
         <button
           class="btn btn-default dropdown-toggle mx-3"
           type="button"
@@ -33,13 +35,12 @@
           data-bs-toggle="dropdown"
           aria-expanded="false"
         >
-          <!-- Hi {{token.name}} -->
-          Hi W
+          Hi {{ token.firstName }}
         </button>
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
           <li><a class="dropdown-item" routerLink="/profile">Profile</a></li>
           <li><hr class="dropdown-divider" /></li>
-          <!-- <li><a class="dropdown-item" (click)="logOut()">Logout</a></li> -->
+          <li><a class="dropdown-item" (click)="logOut()">Logout</a></li>
         </ul>
       </div>
     </div>

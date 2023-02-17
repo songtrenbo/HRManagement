@@ -1,6 +1,6 @@
 import express from 'express';
 import UserController from '../controllers/user.controller';
-import { tokenChecker } from '../middlewares/tokenChecker';
+// import { tokenChecker } from '../middlewares/tokenChecker';
 
 const router = express.Router();
 

@@ -5,6 +5,8 @@ import { UserService } from 'src/app/services/user.service';
 import { SubscriptionLike } from 'rxjs';
 import { User } from 'src/app/models/user.model';
 import Swal from 'sweetalert2';
+import { Token } from 'src/app/models/token.model';
+import { TokenService } from 'src/app/services/token.service';
 
 @Component({
   selector: 'app-login',
@@ -15,14 +17,22 @@ export class LoginComponent implements OnInit, OnDestroy{
 
   subscription: SubscriptionLike | undefined;
   user: User = new User('','','','','','','','',new Date(),'','',[],'');
-  constructor(private userService: UserService, private cookiesService: CookieService, private router: Router){}
+  token: Token = new Token('', '', '','', 0, 0);;
+  constructor(private userService: UserService, private tokenSerivce: TokenService, private cookiesService: CookieService, private router: Router){}
   ngOnInit(): void {}
 
   login() {
     this.subscription = this.userService.login(this.user).subscribe({
       next: (response: User) => {
+        console.log(response.token);
         this.cookiesService.set('Token', response.token);
-        this.router.navigate(["/manage"]);
+        this.token = this.tokenSerivce.existToken()!;
+        if(this.token.role === 'admin' || this.token.role === 'leader'){
+          this.router.navigate(["/manage"]);
+        }
+        else{
+          this.router.navigate(['/home']);
+        }
       },
 
       error: (error: any) => {

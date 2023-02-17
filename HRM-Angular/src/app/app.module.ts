@@ -9,6 +9,9 @@ import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { FormsModule } from '@angular/forms';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
+import { TeamManagementComponent } from './components/team-management/team-management.component';
+import { UserManagementComponent } from './components/user-management/user-management.component';
+import { MemberManagementComponent } from './components/member-management/member-management.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +20,10 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
     NavbarComponent,
     LoginComponent,
     RegisterComponent,
-    SidebarComponent
+    SidebarComponent,
+    TeamManagementComponent,
+    UserManagementComponent,
+    MemberManagementComponent
   ],
   imports: [
     BrowserModule,
